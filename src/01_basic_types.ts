@@ -191,4 +191,42 @@ let test4: Animal = {
     name: '도우너',
 }
 
-// Intersection : 교집합
+// Intersection : 교집합(모든 property 들어있어야 함)
+// 복수의 타입을 조합하는 경우 `&`로 타입을 구분
+type Human2 = {
+    name: string;
+    lang: string;
+}
+type Dog2 = {
+    name: string;
+    age: number;
+}
+
+type Animal2 = Human2 & Dog2;
+
+// 할당 시점: 각 타입의 모든 프로퍼티를 가지고 있어야 통과
+const animal2: Animal2 = {
+    name: '고래'
+    ,lang: 'ko'
+    ,age: 20
+};
+// 사용 시점: 모든 프로퍼티에 접근 가능
+animal2.age;
+
+// --------------------------
+// never 타입: 절대 발생하지 않아야 하는 불가능의 의미를 가진 타입
+type Color = 'red' | 'green';
+
+function getFlower(val: Color): string {
+    if(val === 'red') {
+        return 'Rose';
+    } else if (val === 'green') {
+        return 'tree'
+    } else {
+        return checkInfo(val);
+    }
+}
+
+function checkInfo(info: never): never {
+    throw new Error(`타입 오류: ${info}`);
+}
